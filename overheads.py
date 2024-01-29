@@ -23,4 +23,11 @@ with fp.open(mode="r", encoding="UTF-8", newline="") as file:
                 highest_overhead_amount=overhead_amount
                 highest_overhead_category=category
                 
-    print(f'The highest overhead expense category is {highest_overhead_category} at an amount of {highest_overhead_amount}.')
+    #file path to txt file
+    fp = Path.cwd()/"summary_report.txt"
+    #creating txt file
+    fp.touch()
+    #opening the summary text file and set it to write mode
+    with fp.open(mode="w", encoding="UTF-8", newline="") as file:
+        #writing the highest overhead into the summary text file
+        file.write(f"[HIGHEST OVERHEAD] {highest_overhead_category.upper()}: {highest_overhead_amount}%")
