@@ -48,4 +48,59 @@ def profit_loss_function():
             # Update previous net profit with current net profit
             previous_net_profit = current_net_profit
 
+            # Identifying the deficits which are negative differences
+            if difference < 0:
+                # Append all deficits into a list 
+                total_deficit.append([day,difference])
+                                      
+        # Calculating the highest increment and decrement of net profit
+        for day, difference in difference_in_net_profit:
+
+            # Checking if the current difference of net profit is less than the current highest decrement 
+            # If it is, this becomes the new highest decrement
+            if difference < highest_decrement[1]:
+                highest_decrement=[day, difference]
+            # Checking if the current difference is greater than the current highest increment
+            # If it is, this becomes the new highest increment
+            elif difference > highest_increment[1]:
+                highest_increment=[day, difference]
+
+    # file path to txt file
+    fp = Path.cwd()/"summary_report.txt"
+
+    # creating txt file
+    fp.touch()
+
+    # Opening the summary text file in append mode to ensure that the profit and loss calculation results, is added without overwriting existing data. 
+    with fp.open(mode="a", encoding="UTF-8", newline="") as file:
+        # Checking if theres always only a increasing trend in the net profit by seeing if everydays net profit is higher than the previous day and if there is, write the highest increment day and amount in the summary text file
+        if highest_increment[1] > 0 and highest_decrement[1] == 0:
+            file.write(f"[NET PROFIT SURPLUS] NET PROFIT ON EACH DAY IS HIGHER THAN THE PREVIOUS\n [HIGHEST NET PROFIT SURPLUS] DAY: {highest_increment[0]}, AMOUNT: SGD{int(highest_increment[1])}")
+        # Checking if theres always only a decreasing trend in the net profit by seeing if everydays net profit is lower than the previous day and if there is, write the highest decrement day and amount in the summary text file
+        elif highest_decrement[1] < 0 and highest_increment[1] == 0:
+            file.write(f"[NET PROFIT DEFICIT] NET PROFIT ON EACH DAY IS LOWER THAN THE PREVIOUS\n [HIGHEST PROFIT DEFICIT] DAY: {highest_decrement[0]}, AMOUNT: SGD{int(abs(highest_decrement[1]))}")
+        # Checking if there is a fluctuating data trend in the net profit by seeing if theres an higher net profit on some days and lower on some days and if there is, write all the deficits into the summary text file
+        elif highest_increment[1] > 0 and highest_decrement[1] < 0:
+            for day, deficit in total_deficit:
+                file.write(f"[NET PROFIT DEFICIT] DAY: {day}, AMOUNT: SGD{int(abs(deficit))}\n")
+                 # Identify the highest deficit
+                if deficit < first_deficit[1]:
+                    # If the deficit is more negative than the deficit in first_deficit, then update it with the new deficit and its corresponding day
+                    first_deficit= [day, deficit]
+                # Identify the second highest deficit
+                elif deficit < second_deficit[1]:
+                    # If the deficit is less negative than the deficit in first_deficit but more negative than the deficit in second_deficit, then update it with the new deficit and its corresponding day
+                    second_deficit = [day, deficit]
+                # Identify the third highest deficit
+                elif deficit< third_deficit[1]:
+                    # If the deficit is less negative than both the first and second but greater than the third largest recorded deficit, then update it with the new deficit and its corresponding day
+                    third_deficit = [day, deficit]
+
+            # Writing the top 3 deficits into the summary text file
+            file.write(f"[HIGHEST NET PROFIT DEFICIT] DAY: {first_deficit[0]}, AMOUNT: SGD{int(abs(first_deficit[1]))}\n[2ND HIGHEST NET PROFIT DEFICIT] DAY: {second_deficit[0]}, AMOUNT: SGD{int(abs(second_deficit[1]))}\n[3RD HIGHEST NET PROFIT DEFICIT] DAY: {third_deficit[0]}, AMOUNT: SGD{int(abs(third_deficit[1]))}\n")
+
+
+
+
+
 
