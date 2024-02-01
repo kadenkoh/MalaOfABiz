@@ -43,7 +43,7 @@ def cash_on_hand_function():
             current_cash_on_hand = float(row[1])
             # Calculate the difference and append it to the list 
             difference = current_cash_on_hand - previous_cash_on_hand
-            difference_in_cash_on_hand.append([day, difference])  
+            difference_in_cash_on_hand.append([day, difference]) # Store the day and difference as a list
 
             # Update previous cash on hand with current cash on hand
             previous_cash_on_hand = current_cash_on_hand

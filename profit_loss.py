@@ -43,7 +43,7 @@ def profit_loss_function():
             current_net_profit = float(row[4])
             # Calculate the difference and append it to the list
             difference = current_net_profit - previous_net_profit
-            difference_in_net_profit.append([day, difference])  # Store the day and difference as a 
+            difference_in_net_profit.append([day, difference])  # Store the day and difference as a list
 
             # Update previous net profit with current net profit
             previous_net_profit = current_net_profit
