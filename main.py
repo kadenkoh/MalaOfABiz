@@ -8,11 +8,11 @@ def main():
 
     - No parameter needed 
     """
-    # initialised all the functions from their respective codes
+    #initialised all the functions from their respective codes
     overheads.overheads_function()
     cash_on_hand.cash_on_hand_function()
     profit_loss.profit_loss_function()
 
-# run the main function
+#run the main function
 main()
 
